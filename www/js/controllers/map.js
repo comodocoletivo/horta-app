@@ -6,9 +6,9 @@
     .module('starter.controllers')
     .controller('GeoCtrl', Geo);
 
-    Geo.$inject = ['$scope', '$cordovaGeolocation', 'GardenApi'];
+    Geo.$inject = ['$scope', '$cordovaGeolocation', 'GardenApi', '$ionicLoading'];
 
-    function Geo($scope, $cordovaGeolocation, GardenApi) {
+    function Geo($scope, $cordovaGeolocation, GardenApi, $ionicLoading) {
       /* jshint validthis: true */
       var vm = this;
 
@@ -26,6 +26,8 @@
       // ====
 
       function showMap() {
+        showLoading()
+
         var posOptions, coords;
 
         posOptions = {
@@ -289,6 +291,8 @@
         $scope.userMarker = userMarker;
 
         $scope.$emit('map_ok');
+
+        hideLoading();
       }
 
       function _addMarkers() {
@@ -303,7 +307,7 @@
         $scope.mapsMarkers = [];
         $scope.marker_click = '';
 
-        console.warn('arrayMarkers', arrayMarkers);
+        // console.warn('arrayMarkers', arrayMarkers);
 
         for(var i = 0; i < arrayMarkers.length; i++ ) {
           marker = new google.maps.Marker({
@@ -362,9 +366,9 @@
 
       function _checkIcon(type) {
         if (type === 'garden') {
-          return '../img/marker-garden.svg';
+          return 'img/hortas.png';
         } else {
-          return '../img/marker-fairs.svg';
+          return 'img/feiras.png';
         }
       }
 
@@ -423,6 +427,20 @@
             Notification.show('Atenção', 'Tivemos um problema no nosso servidor, tente em instantes.');
           }
         });
+      }
+
+      function showLoading() {
+        $ionicLoading.show({
+          template: 'Carregando mapa ...'
+        }).then(function(){
+         console.log("The loading indicator is now displayed");
+       });
+      }
+
+      function hideLoading() {
+        $ionicLoading.hide().then(function(){
+         console.log("The loading indicator is now hidden");
+       });
       }
 
     }
