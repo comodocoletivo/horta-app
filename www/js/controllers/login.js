@@ -17,7 +17,6 @@
 
       function submitForm() {
         return submit().then(function() {
-          $location.path('app/map')
           // $rootScope.progressbar.complete();
         })
       }
@@ -28,6 +27,7 @@
         var params = vm.loginData;
 
         return Loginservice.authEmail(params).then(function(result) {
+          $location.path('app/map');
           $log.info('Loginservice.authEmail: ', result);
         }, function(err) {
           if (err === 401) { console.log('não tem permissão') }
