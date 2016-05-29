@@ -23,12 +23,10 @@
         }}).then(success).catch(error);
 
         function success(response) {
-          // $log.warn('success POST', success);
           return response.data;
         }
 
         function error(err) {
-          // $log.warn('err POST', err)
           return $q.reject(err.status);
         }
       }
