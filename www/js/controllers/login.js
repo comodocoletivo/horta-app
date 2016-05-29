@@ -6,9 +6,9 @@
     .module('starter.controllers')
     .controller('LoginCtrl', Login);
 
-    Login.$inject = ['$scope', '$log', 'Loginservice'];
+    Login.$inject = ['$scope', '$log', 'Loginservice', '$location'];
 
-    function Login($scope, $log, Loginservice) {
+    function Login($scope, $log, Loginservice, $location) {
       /* jshint validthis: true */
       var vm = this;
 
@@ -17,6 +17,7 @@
 
       function submitForm() {
         return submit().then(function() {
+          $location.path('app/map')
           // $rootScope.progressbar.complete();
         })
       }

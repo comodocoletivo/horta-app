@@ -39,6 +39,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     abstract: true,
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
+    // ,resolve: { checkloggedout: checkloggedout }
   })
 
   .state('app.map', {
@@ -82,3 +83,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 });
+
+checkloggedout.$inject =  ['checkloggedout'];
+
+function checkloggedout(checkloggedout) {
+  return checkloggedout.getStatus();
+}
