@@ -47,7 +47,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     views: {
       'menuContent': {
         templateUrl: 'templates/map.html',
-        controller: 'GeoCtrl'
+        controller: 'GeoCtrl',
+        controllerAs: 'geo'
       }
     }
   })

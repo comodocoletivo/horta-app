@@ -1,0 +1,18 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">{{geo.modal_marker.type}}</h1>
+
+    <button class="button button-active button-primary"
+      ng-click="modal.hide()">fechar</button>
+  </ion-header-bar>
+
+  <ion-content>
+    <div class="list card">
+      <div class="item item-body">
+        <p>{{geo.modal_marker.title}}</p>
+
+        <p><a href="#" class="subdued">{{geo.modal_marker.link}}</a></p>
+      </div>
+    </div>
+  </ion-content>
+</ion-modal-view>

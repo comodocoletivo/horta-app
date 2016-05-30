@@ -6,9 +6,9 @@
     .module('starter.controllers')
     .controller('GeoCtrl', Geo);
 
-    Geo.$inject = ['$scope', '$cordovaGeolocation', 'GardenApi', '$ionicLoading'];
+    Geo.$inject = ['$scope', '$cordovaGeolocation', 'GardenApi', '$ionicLoading', '$ionicModal'];
 
-    function Geo($scope, $cordovaGeolocation, GardenApi, $ionicLoading) {
+    function Geo($scope, $cordovaGeolocation, GardenApi, $ionicLoading, $ionicModal) {
       /* jshint validthis: true */
       var vm = this;
 
@@ -17,11 +17,13 @@
       vm.initialize = _initialize;
       vm.addMarkers = _addMarkers;
       vm.getMarkersByApi = _getMarkersByApi;
+      vm.showModal = _showModal;
 
       // executando as funções
       $scope.$on('map_ok', vm.getMarkersByApi);
-
       $scope.$on('pins_ok', vm.addMarkers);
+      $scope.$on('marker_click', vm.showModal);
+
 
       // ====
 
@@ -441,6 +443,30 @@
         $ionicLoading.hide().then(function(){
          console.log("The loading indicator is now hidden");
        });
+      }
+
+      function showModal() {
+        $scope.openModal = function() {
+          $scope.modal.show();
+        };
+
+        $scope.closeModal = function() {
+          $scope.modal.hide();
+        };
+      }
+
+      function _showModal(marker, i) {
+        console.warn('dsds', i.marker.data);
+
+        vm.modal_marker = i.marker.data;
+
+        $ionicModal.fromTemplateUrl('templates/modals/map-modal.html', {
+          scope: $scope,
+          animation: 'slide-in-up'
+        }).then(function(modal) {
+          $scope.modal = modal;
+          $scope.modal.show();
+        });
       }
 
     }
