@@ -9853,3 +9853,30 @@ h5.subtitle {
 
 .wrp-link {
   text-align: center; }
+
+.wrp-controls-map {
+  position: absolute;
+  right: 5px;
+  z-index: 100;
+  top: 10px; }
+  .wrp-controls-map button {
+    width: 30px;
+    height: 30px;
+    background-color: #16663B;
+    color: #ffffff;
+    margin: 0 5px 10px;
+    border-radius: 100%;
+    outline: none;
+    border: none;
+    text-indent: -9999px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100%;
+    transition: all .25s linear 0s; }
+    .wrp-controls-map button:hover, .wrp-controls-map button:focus, .wrp-controls-map button.active {
+      background-color: #ffffff;
+      color: #16663B;
+      outline: none; }
+    .wrp-controls-map button.my_location {
+      background-size: 40%;
+      background-image: url("../img/icon-my-location.png"); }
