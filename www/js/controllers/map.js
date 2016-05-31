@@ -6,9 +6,9 @@
     .module('starter.controllers')
     .controller('GeoCtrl', Geo);
 
-    Geo.$inject = ['$scope', '$cordovaGeolocation', 'GardenApi', '$ionicLoading', '$ionicModal', '$log'];
+    Geo.$inject = ['$scope', '$cordovaGeolocation', 'GardenApi', '$ionicLoading', '$ionicModal', '$log', 'UserApi', 'localstorage'];
 
-    function Geo($scope, $cordovaGeolocation, GardenApi, $ionicLoading, $ionicModal, $log) {
+    function Geo($scope, $cordovaGeolocation, GardenApi, $ionicLoading, $ionicModal, $log, UserApi, localstorage) {
       /* jshint validthis: true */
       var vm = this;
 
@@ -20,6 +20,8 @@
       vm.showModal = _showModal;
       vm.backMyLocation = _backMyLocation;
       vm.showAllMarkers = _showAllMarkers;
+      vm.addToFavorite = _addToFavorite;
+      vm.lookup = _lookup;
 
       // executando as funções
       $scope.$on('map_ok', vm.getMarkersByApi);
@@ -576,6 +578,40 @@
 
       function _showAllMarkers() {
         $scope.map.fitBounds($scope.bounds);
+      }
+
+      function _addToFavorite(id) {
+        return addFavorite(id).then(function() {
+          vm.lookup();
+        });
+      }
+
+      function addFavorite(id) {
+        var params = { favID: id };
+
+        return UserApi.addFavorite(params).then(function(result) {
+          // $log.info('addFavorite: ', result);
+          $scope.modal.hide();
+        }, function(err) {
+          if (err === 401) { console.log('não tem permissão') }
+          else {$log.warn('status error: ', err)}
+        })
+      }
+
+      function _lookup() {
+        return getUser().then(function() {
+        });
+      }
+
+      function getUser() {
+        return UserApi.lookup().then(function(result) {
+          localstorage.saveUser(result);
+          $log.info('lookup: ', result);
+          $scope.modal.hide();
+        }, function(err) {
+          if (err === 401) { console.log('não tem permissão') }
+          else {$log.warn('status error: ', err)}
+        })
       }
 
     }
