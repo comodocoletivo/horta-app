@@ -26,67 +26,58 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
+    .state('login', {
+      url: '/login',
+      templateUrl: 'templates/login.html',
+      controller: 'LoginCtrl',
+      controllerAs: 'login'
+    })
 
-  .state('login', {
-    url: '/login',
-    templateUrl: 'templates/login.html',
-    controller: 'LoginCtrl',
-    controllerAs: 'login'
-  })
+    .state('app', {
+      url: '/app',
+      abstract: true,
+      templateUrl: 'templates/_menu.html'
+    })
 
-  .state('app', {
-    url: '/app',
-    abstract: true,
-    templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
-    // ,resolve: { checkloggedout: checkloggedout }
-  })
-
-  .state('app.map', {
-    url: '/map',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/map.html',
-        controller: 'GeoCtrl',
-        controllerAs: 'geo'
-      }
-    }
-  })
-
-  .state('app.profile', {
-      url: '/profile',
+    .state('app.map', {
+      url: '/map',
       views: {
         'menuContent': {
-          templateUrl: 'templates/profile.html'
+          templateUrl: 'templates/map.html',
+          controller: 'GeoCtrl',
+          controllerAs: 'geo'
         }
       }
     })
+
+    .state('app.profile', {
+      url: '/profile',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/profile.html',
+          controller: 'ProfileCtrl',
+          controllerAs: 'profile'
+        }
+      }
+    })
+
     .state('app.favorites', {
       url: '/favorites',
       views: {
         'menuContent': {
           templateUrl: 'templates/favorites.html',
-          controller: 'PlaylistsCtrl'
+          controller: 'FavoritesCtrl',
+          controllerAs: 'fav'
         }
       }
-    })
-
-  .state('app.single', {
-    url: '/favorites/:favoriteId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
-      }
-    }
-  });
+    });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 });
 
-checkloggedout.$inject =  ['checkloggedout'];
+// checkloggedout.$inject =  ['checkloggedout'];
 
-function checkloggedout(checkloggedout) {
-  return checkloggedout.getStatus();
-}
+// function checkloggedout(checkloggedout) {
+//   return checkloggedout.getStatus();
+// }
