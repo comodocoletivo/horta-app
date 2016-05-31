@@ -26,7 +26,8 @@
         }}).then(success).catch(error);
 
         function success(response) {
-          sessionStorage.setItem('authorization', response.headers()['authorization']);
+          // console.warn('HEADER', response.headers()['authorization']);
+          // sessionStorage.setItem('authorization', response.headers()['authorization']);
           return response.data;
         }
 
@@ -41,7 +42,8 @@
         }}).then(success).catch(error);
 
         function success(response) {
-          sessionStorage.setItem('authorization', response.headers()['authorization']);
+          // console.warn('HEADER', response.headers()['authorization']);
+          // sessionStorage.setItem('authorization', response.headers()['authorization']);
           return response.data;
         }
 
