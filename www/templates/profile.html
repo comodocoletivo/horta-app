@@ -1,7 +1,6 @@
 <ion-view view-title="Perfil">
   <ion-content>
     <div class="list card">
-
       <div class="item item-avatar">
         <img src="avatar.jpg">
         <h2>Pedro Borges</h2>
@@ -9,13 +8,23 @@
 
         <span>minha horta</span>
       </div>
-
-      <a class="item item-icon-left assertive" href="#">
-        <i class="icon ion-music-note"></i>
-        Start listening
-      </a>
-
     </div>
 
+    <h3>minha horta</h3>
+
+    <a class="item item-icon-right assertive" ng-click="profile.action('1')">
+      Alface
+      <i class="icon ion-ios-trash-outline"></i>
+    </a>
+
+    <a class="item item-icon-right assertive" ng-click="profile.action('2')">
+      Uva
+      <i class="icon ion-ios-trash-outline"></i>
+    </a>
+
+    <a class="item item-icon-right assertive" ng-click="profile.action('3')">
+      Pêra
+      <i class="icon ion-ios-trash-outline"></i>
+    </a>
   </ion-content>
 </ion-view>
