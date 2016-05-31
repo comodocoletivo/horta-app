@@ -12,8 +12,6 @@
       /* jshint validthis: true */
       var vm = this;
 
-
-      // vm.getAll = getAll;
       getAll();
 
       function getAll() {
