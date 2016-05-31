@@ -551,6 +551,8 @@
       function _showModal(marker, i) {
         vm.modal_marker = i.marker.data;
 
+        console.log(vm.modal_marker);
+
         // exibe o modal para as hortas
         if (vm.modal_marker.type === 'garden') {
           $ionicModal.fromTemplateUrl('templates/modals/map-modal.html', {
