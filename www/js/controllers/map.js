@@ -6,13 +6,13 @@
     .module('starter.controllers')
     .controller('GeoCtrl', Geo);
 
-    Geo.$inject = ['$scope', '$cordovaGeolocation', 'GardenApi', '$ionicLoading', '$ionicModal'];
+    Geo.$inject = ['$scope', '$cordovaGeolocation', 'GardenApi', '$ionicLoading', '$ionicModal', '$log'];
 
-    function Geo($scope, $cordovaGeolocation, GardenApi, $ionicLoading, $ionicModal) {
+    function Geo($scope, $cordovaGeolocation, GardenApi, $ionicLoading, $ionicModal, $log) {
       /* jshint validthis: true */
       var vm = this;
 
-      // showMap();
+      showMap();
 
       vm.initialize = _initialize;
       vm.addMarkers = _addMarkers;
@@ -307,7 +307,6 @@
         arrayMarkers = $scope.all_arr;
 
         $scope.mapsMarkers = [];
-        $scope.marker_click = '';
 
         // console.warn('arrayMarkers', arrayMarkers);
 
@@ -375,19 +374,22 @@
       }
 
       function _getMarkersByApi() {
-        var arr_gardens, arr_markets, all_arr, params;
+        return markers().then(function() {
+        });
+      }
+
+      function markers() {
+        var arr_gardens, arr_markets, all_arr, params,
+            gardens, markets;
 
         arr_gardens = [];
         arr_markets = [];
 
-        params = $scope.user_location;
+        // params = $scope.user_location;
 
-        GardenApi.All(params, function(response) {
-          var gardens, markets;
-
-          if (response.status === 200) {
-            gardens = response.data.gardens;
-            markets = response.data.markets;
+        return GardenApi.getAll().then(function(result) {
+            gardens = result.gardens;
+            markets = result.markets;
 
             if (gardens.length > 0){
               angular.forEach(gardens, function(i) {
@@ -399,7 +401,7 @@
                   type: 'garden',
                   email: i.email,
                   fullName: i.fullName,
-                  address: 'Av cruz de rebouças, 1222, TIJIPIÓ - PE'
+                  // address: 'Av cruz de rebouças, 1222, TIJIPIÓ - PE'
                 })
               })
             } else { console.warn('nenhuma horta') }
@@ -425,9 +427,9 @@
             $scope.all_arr = all_arr;
 
             $scope.$emit('pins_ok');
-          } else {
-            Notification.show('Atenção', 'Tivemos um problema no nosso servidor, tente em instantes.');
-          }
+        }, function(err) {
+          if (err === 401) { console.log('não tem permissão') }
+          else {$log.warn('status error: ', err)}
         });
       }
 
@@ -456,17 +458,20 @@
       }
 
       function _showModal(marker, i) {
-        console.warn('dsds', i.marker.data);
-
         vm.modal_marker = i.marker.data;
 
-        $ionicModal.fromTemplateUrl('templates/modals/map-modal.html', {
-          scope: $scope,
-          animation: 'slide-in-up'
-        }).then(function(modal) {
-          $scope.modal = modal;
-          $scope.modal.show();
-        });
+        // exibe o modal para as hortas
+        if (vm.modal_marker.type === 'garden') {
+          $ionicModal.fromTemplateUrl('templates/modals/map-modal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+          }).then(function(modal) {
+            $scope.modal = modal;
+            $scope.modal.show();
+          });
+        } else {
+          return;
+        }
       }
 
     }

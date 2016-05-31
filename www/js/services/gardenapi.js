@@ -19,8 +19,8 @@
         removeItem: removeItem
       };
 
-      function getAll(data) {
-        return $http.post(apiUrl + '/api/v1/auth/', data, { headers: {
+      function getAll() {
+        return $http.get(apiUrl + '/api/v1/markets/', { headers: {
           'Content-Type': 'application/json'
         }}).then(success).catch(error);
 
