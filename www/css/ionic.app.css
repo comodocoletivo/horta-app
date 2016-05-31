@@ -9844,3 +9844,9 @@ h5.subtitle {
 
 .assertive, a.assertive {
   color: #16663b; }
+
+.bar.bar-positive {
+  border-color: #16663b;
+  background-color: #16663b;
+  background-image: linear-gradient(0deg, #16663b, #16663b 50%, transparent 50%);
+  color: #fff; }
