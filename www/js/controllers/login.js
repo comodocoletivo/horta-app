@@ -6,9 +6,9 @@
     .module('starter.controllers')
     .controller('LoginCtrl', Login);
 
-    Login.$inject = ['$scope', '$log', 'Loginservice', '$location', '$ionicModal'];
+    Login.$inject = ['$scope', '$log', 'Loginservice', '$location', '$ionicModal', 'localstorage'];
 
-    function Login($scope, $log, Loginservice, $location, $ionicModal) {
+    function Login($scope, $log, Loginservice, $location, $ionicModal, localstorage) {
       /* jshint validthis: true */
       var vm = this;
 
@@ -29,8 +29,10 @@
         var params = vm.loginData;
 
         return Loginservice.authEmail(params).then(function(result) {
-          $scope.modal.hide()
           $log.info('Loginservice.authEmail: ', result);
+
+          localstorage.saveUser(result);
+          $scope.modal.hide();
           $location.path('app/map');
         }, function(err) {
           if (err === 401) { console.log('não tem permissão') }

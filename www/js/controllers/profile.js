@@ -6,15 +6,16 @@
     .module('starter.controllers')
     .controller('ProfileCtrl', Profile);
 
-    Profile.$inject = ['$scope', '$ionicActionSheet', '$ionicModal'];
+    Profile.$inject = ['$scope', '$ionicActionSheet', '$ionicModal', '$location', '$rootScope'];
 
-    function Profile($scope, $ionicActionSheet, $ionicModal) {
+    function Profile($scope, $ionicActionSheet, $ionicModal, $location, $rootScope) {
       /* jshint validthis: true */
       var vm = this;
 
       vm.action = showAction;
       vm.modal = showModal;
       vm.addItem = addItem;
+      vm.logout = logout;
 
       function showAction(id) {
         var id, hideSheet;
@@ -48,6 +49,13 @@
 
       function addItem() {
         console.log('hey you');
+      }
+
+      function logout() {
+        localStorage.removeItem('HORTA_APP');
+        delete $rootScope.user;
+
+        $location.path('login');
       }
 
     }

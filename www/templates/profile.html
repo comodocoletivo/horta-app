@@ -6,12 +6,12 @@
   <ion-content>
     <div class="list card">
       <div class="item item-avatar">
-        <img src="avatar.jpg">
-        <h2>Pedro Borges</h2>
-        <p>pedroborges@gmail.com</p>
+        <img src="{{user.social.picture}}">
+        <h2>{{user.fullName}}</h2>
+        <p>{{user.email}}</p>
       </div>
 
-      <a href="#/login" class="button icon-left ion-android-exit">sair</a>
+      <a ng-click="profile.logout()" class="button icon-left ion-android-exit">sair</a>
     </div>
 
     <!-- <h5 class="subtitle">minha horta</h5> -->
