@@ -33,6 +33,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       controllerAs: 'login'
     })
 
+    .state('cadastro', {
+      url: '/cadastro',
+      templateUrl: 'templates/cadastro.html',
+      controller: 'CadastroCtrl',
+      controllerAs: 'cadastro'
+    })
+
     .state('app', {
       url: '/app',
       abstract: true,

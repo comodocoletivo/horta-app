@@ -19,13 +19,10 @@
 
       function submitForm() {
         return submit().then(function() {
-          // $rootScope.progressbar.complete();
-        })
+        });
       }
 
       function submit() {
-        // $rootScope.progressbar.start();
-
         var params = vm.loginData;
 
         return Loginservice.authEmail(params).then(function(result) {
