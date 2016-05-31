@@ -36,13 +36,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     .state('app', {
       url: '/app',
       abstract: true,
-      templateUrl: 'templates/_menu.html'
+      templateUrl: 'templates/menu-primary.html'
     })
 
     .state('app.map', {
       url: '/map',
       views: {
-        'menuContent': {
+        'tab-map': {
           templateUrl: 'templates/map.html',
           controller: 'GeoCtrl',
           controllerAs: 'geo'
@@ -53,7 +53,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     .state('app.profile', {
       url: '/profile',
       views: {
-        'menuContent': {
+        'tab-profile': {
           templateUrl: 'templates/profile.html',
           controller: 'ProfileCtrl',
           controllerAs: 'profile'
@@ -64,7 +64,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     .state('app.favorites', {
       url: '/favorites',
       views: {
-        'menuContent': {
+        'tab-favorites': {
           templateUrl: 'templates/favorites.html',
           controller: 'FavoritesCtrl',
           controllerAs: 'fav'
