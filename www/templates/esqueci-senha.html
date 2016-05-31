@@ -1,0 +1,27 @@
+<ion-content>
+  <figure class="img-primary">
+    <img src="img/logo-primary.png" alt="logo principal">
+    <figcaption>Esqueci a senha</figcaption>
+  </figure>
+
+  <div>
+    <div class="col">
+      <form class="login-form" ng-submit="login.submit()">
+        <div class="list">
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">E-mail</span>
+            <input type="email" placeholder="nome@email.com" ng-model="login.loginData.email">
+          </label>
+
+          <label>
+            <button class="button button-full button-dark" type="submit">Recuperar senha</button>
+          </label>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="col wrp-link">
+    <a ng-href="#/login">Login</a>
+  </div>
+</ion-content>

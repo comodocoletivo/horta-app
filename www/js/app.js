@@ -40,6 +40,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       controllerAs: 'cadastro'
     })
 
+    .state('esqueciSenha', {
+      url: '/esqueci-senha',
+      templateUrl: 'templates/esqueci-senha.html',
+      // controller: 'UserCtrl',
+      // controllerAs: 'cadastro'
+    })
+
     .state('app', {
       url: '/app',
       abstract: true,
