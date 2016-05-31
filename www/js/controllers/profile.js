@@ -6,9 +6,9 @@
     .module('starter.controllers')
     .controller('ProfileCtrl', Profile);
 
-    Profile.$inject = ['$scope', '$ionicActionSheet', '$ionicModal', '$location', '$rootScope'];
+    Profile.$inject = ['$scope', '$ionicActionSheet', '$ionicModal', '$location', '$rootScope', 'GardenApi', '$log', 'UserApi', 'localstorage'];
 
-    function Profile($scope, $ionicActionSheet, $ionicModal, $location, $rootScope) {
+    function Profile($scope, $ionicActionSheet, $ionicModal, $location, $rootScope, GardenApi, $log, UserApi, localstorage) {
       /* jshint validthis: true */
       var vm = this;
 
@@ -16,6 +16,7 @@
       vm.modal = showModal;
       vm.addItem = addItem;
       vm.logout = logout;
+      vm.lookup = lookup;
 
       function showAction(id) {
         var id, hideSheet;
@@ -48,7 +49,39 @@
       }
 
       function addItem() {
-        console.log('hey you');
+        return submitItem().then(function() {
+          vm.lookup();
+        });
+      }
+
+      function submitItem() {
+        var params = vm.formData;
+
+        return GardenApi.addItem(params).then(function(result) {
+          $log.info('addItem: ', result);
+          $scope.modal.hide();
+        }, function(err) {
+          $scope.modal.hide();
+
+          if (err === 401) { console.log('não tem permissão') }
+          else {$log.warn('status error: ', err)}
+        })
+      }
+
+      function lookup() {
+        return getUser().then(function() {
+          // console.warn('acabei')
+        });
+      }
+
+      function getUser() {
+        return UserApi.lookup().then(function(result) {
+          localstorage.saveUser(result);
+          $log.info('lookup: ', result);
+        }, function(err) {
+          if (err === 401) { console.log('não tem permissão') }
+          else {$log.warn('status error: ', err)}
+        })
       }
 
       function logout() {
