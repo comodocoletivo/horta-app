@@ -105,11 +105,11 @@ h5.subtitle {
     &.my_location {
       background-size: 40%;
       background-image: url('../img/icon-my-location.png');
+    }
 
-      // &:hover, &:focus, &.active {
-      //   background-image: url('img/icon-my-location-hover.png');
-      //   // @include path('icon-my-location-hover.svg');
-      // }
+    &.all_map {
+      background-size: 40%;
+      background-image: url('../img/icon-all-map.png');
     }
   }
 }

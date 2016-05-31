@@ -9880,3 +9880,6 @@ h5.subtitle {
     .wrp-controls-map button.my_location {
       background-size: 40%;
       background-image: url("../img/icon-my-location.png"); }
+    .wrp-controls-map button.all_map {
+      background-size: 40%;
+      background-image: url("../img/icon-all-map.png"); }

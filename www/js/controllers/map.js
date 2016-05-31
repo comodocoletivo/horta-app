@@ -19,6 +19,7 @@
       vm.getMarkersByApi = _getMarkersByApi;
       vm.showModal = _showModal;
       vm.backMyLocation = _backMyLocation;
+      vm.showAllMarkers = _showAllMarkers;
 
       // executando as funções
       $scope.$on('map_ok', vm.getMarkersByApi);
@@ -83,8 +84,8 @@
         userMarker = new google.maps.Marker({
           position: userPosition,
           map: map,
-          animation: google.maps.Animation.DROP
-          // icon: '../../images/user-icon.png'
+          animation: google.maps.Animation.DROP,
+          icon: 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/map-marker-32.png'
         });
 
         userRadius = new google.maps.Circle({
@@ -293,9 +294,13 @@
         $scope.map = map;
         $scope.userMarker = userMarker;
 
-        $scope.$emit('map_ok');
+        // $scope.$emit('map_ok');
 
         hideLoading();
+
+        // Eventos
+        // carrega mais marcadores
+        google.maps.event.addListener(map, 'dragend', _showMarkers);
       }
 
       function _addMarkers() {
@@ -339,7 +344,6 @@
 
           // agrupa os marcadores na view
           $scope.bounds.extend(new google.maps.LatLng(arrayMarkers[i].lat, arrayMarkers[i].lng));
-          $scope.map.fitBounds($scope.bounds);
 
           // Infowindow com o título da denúncia
           google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -388,10 +392,91 @@
 
         params = $scope.user_location;
 
-        console.warn('user_location', params);
+        // console.warn('user_location', params);
 
         return GardenApi.getByLatLng(params).then(function(result) {
             console.warn('result', result);
+
+            gardens = result.gardens;
+            markets = result.markets;
+
+            if (gardens.length > 0){
+              angular.forEach(gardens, function(i) {
+                arr_gardens.push({
+                  id: i._id,
+                  lat: i.geolocation[1],
+                  lng: i.geolocation[0],
+                  garden: i.garden,
+                  type: 'garden',
+                  email: i.email,
+                  fullName: i.fullName,
+                  // address: 'Av cruz de rebouças, 1222, TIJIPIÓ - PE'
+                })
+              })
+            } else { console.warn('nenhuma horta') }
+
+            if (markets.length > 0){
+              angular.forEach(markets, function(i) {
+                arr_markets.push({
+                  id: i._id,
+                  title: i.title,
+                  lat: i.geolocation[1],
+                  lng: i.geolocation[0],
+                  rating_value: i.rating_value,
+                  type: i.type,
+                  link: i.link
+                })
+              })
+            } else { console.warn('nenhuma feira') }
+
+            all_arr = arr_gardens.concat(arr_markets);
+
+            $scope.arr_gardens = arr_gardens;
+            $scope.arr_markets = arr_markets;
+            $scope.all_arr = all_arr;
+
+            $scope.$emit('pins_ok');
+        }, function(err) {
+          if (err === 401) { console.log('não tem permissão') }
+          else {$log.warn('status error: ', err)}
+        });
+      }
+
+      function _showMarkers() {
+        var bounds, south, south_lat, south_lng, north,
+        north_lat, north_lng, center_lat, center_lng,
+        marker, latLng, map, params, arr_gardens,
+        arr_markets, all_arr, gardens, markets;
+
+        map = $scope.map;
+
+        arr_gardens = [];
+        arr_markets = [];
+
+        bounds = map.getBounds();
+
+        // south = map.getBounds().getSouthWest();
+        south_lat = map.getBounds().getSouthWest().lat();
+        south_lng = map.getBounds().getSouthWest().lng();
+
+        // north = map.getBounds().getNorthEast();
+        north_lat = map.getBounds().getNorthEast().lat();
+        north_lng = map.getBounds().getNorthEast().lng();
+
+        center_lat = (south_lat + north_lat) / 2;
+        center_lng = (south_lng + north_lng) / 2;
+
+        latLng = {
+          'lat': center_lat,
+          'lng': center_lng
+        };
+
+        params = latLng;
+
+        console.warn('params', params);
+
+        return GardenApi.getByLatLng(params).then(function(result) {
+            // console.warn('result', result);
 
             gardens = result.gardens;
             markets = result.markets;
@@ -484,6 +569,10 @@
 
         $scope.map.setZoom(14);
         $scope.map.setCenter($scope.userMarker.getPosition());
+      }
+
+      function _showAllMarkers() {
+        $scope.map.fitBounds($scope.bounds);
       }
 
     }
