@@ -6,9 +6,9 @@
     .module('starter.controllers')
     .controller('GeoCtrl', Geo);
 
-    Geo.$inject = ['$scope', '$cordovaGeolocation', 'GardenApi', '$ionicLoading', '$ionicModal'];
+    Geo.$inject = ['$scope', '$cordovaGeolocation', 'GardenApi', '$ionicLoading', '$ionicModal', '$log', 'UserApi', 'localstorage'];
 
-    function Geo($scope, $cordovaGeolocation, GardenApi, $ionicLoading, $ionicModal) {
+    function Geo($scope, $cordovaGeolocation, GardenApi, $ionicLoading, $ionicModal, $log, UserApi, localstorage) {
       /* jshint validthis: true */
       var vm = this;
 
@@ -18,6 +18,10 @@
       vm.addMarkers = _addMarkers;
       vm.getMarkersByApi = _getMarkersByApi;
       vm.showModal = _showModal;
+      vm.backMyLocation = _backMyLocation;
+      vm.showAllMarkers = _showAllMarkers;
+      vm.addToFavorite = _addToFavorite;
+      vm.lookup = _lookup;
 
       // executando as funções
       $scope.$on('map_ok', vm.getMarkersByApi);
@@ -62,13 +66,13 @@
           zoom: 15,
           panControl: false,
           streetViewControl: false,
-          zoomControl: true,
-          scrollwheel: false,
+          zoomControl: false,
+          mapTypeControl: false,
+          scrollwheel: true,
           draggable: true,
           zIndex: 100,
           clickable: true,
           title: 'Você está aqui',
-          mapTypeControl: false,
           zoomControlOptions: {
             style: google.maps.ZoomControlStyle.SMALL,
             position: google.maps.ControlPosition.RIGHT_BOTTOM
@@ -82,8 +86,8 @@
         userMarker = new google.maps.Marker({
           position: userPosition,
           map: map,
-          animation: google.maps.Animation.DROP
-          // icon: '../../images/user-icon.png'
+          animation: google.maps.Animation.DROP,
+          icon: 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/map-marker-32.png'
         });
 
         userRadius = new google.maps.Circle({
@@ -295,6 +299,10 @@
         $scope.$emit('map_ok');
 
         hideLoading();
+
+        // Eventos
+        // carrega mais marcadores
+        // google.maps.event.addListener(map, 'dragend', _showMarkers);
       }
 
       function _addMarkers() {
@@ -307,7 +315,6 @@
         arrayMarkers = $scope.all_arr;
 
         $scope.mapsMarkers = [];
-        $scope.marker_click = '';
 
         // console.warn('arrayMarkers', arrayMarkers);
 
@@ -339,7 +346,6 @@
 
           // agrupa os marcadores na view
           $scope.bounds.extend(new google.maps.LatLng(arrayMarkers[i].lat, arrayMarkers[i].lng));
-          $scope.map.fitBounds($scope.bounds);
 
           // Infowindow com o título da denúncia
           google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -375,19 +381,26 @@
       }
 
       function _getMarkersByApi() {
-        var arr_gardens, arr_markets, all_arr, params;
+        return markers().then(function() {
+        });
+      }
+
+      function markers() {
+        var arr_gardens, arr_markets, all_arr, params,
+            gardens, markets;
 
         arr_gardens = [];
         arr_markets = [];
 
         params = $scope.user_location;
 
-        GardenApi.All(params, function(response) {
-          var gardens, markets;
+        // console.warn('user_location', params);
 
-          if (response.status === 200) {
-            gardens = response.data.gardens;
-            markets = response.data.markets;
+        return GardenApi.getAll().then(function(result) {
+            console.warn('result', result);
+
+            gardens = result.gardens;
+            markets = result.markets;
 
             if (gardens.length > 0){
               angular.forEach(gardens, function(i) {
@@ -399,7 +412,7 @@
                   type: 'garden',
                   email: i.email,
                   fullName: i.fullName,
-                  address: 'Av cruz de rebouças, 1222, TIJIPIÓ - PE'
+                  // address: 'Av cruz de rebouças, 1222, TIJIPIÓ - PE'
                 })
               })
             } else { console.warn('nenhuma horta') }
@@ -425,9 +438,91 @@
             $scope.all_arr = all_arr;
 
             $scope.$emit('pins_ok');
-          } else {
-            Notification.show('Atenção', 'Tivemos um problema no nosso servidor, tente em instantes.');
-          }
+        }, function(err) {
+          if (err === 401) { console.log('não tem permissão') }
+          else {$log.warn('status error: ', err)}
+        });
+      }
+
+      function _showMarkers() {
+        var bounds, south, south_lat, south_lng, north,
+        north_lat, north_lng, center_lat, center_lng,
+        marker, latLng, map, params, arr_gardens,
+        arr_markets, all_arr, gardens, markets;
+
+        map = $scope.map;
+
+        arr_gardens = [];
+        arr_markets = [];
+
+        bounds = map.getBounds();
+
+        // south = map.getBounds().getSouthWest();
+        south_lat = map.getBounds().getSouthWest().lat();
+        south_lng = map.getBounds().getSouthWest().lng();
+
+        // north = map.getBounds().getNorthEast();
+        north_lat = map.getBounds().getNorthEast().lat();
+        north_lng = map.getBounds().getNorthEast().lng();
+
+        center_lat = (south_lat + north_lat) / 2;
+        center_lng = (south_lng + north_lng) / 2;
+
+        latLng = {
+          'lat': center_lat,
+          'lng': center_lng
+        };
+
+        params = latLng;
+
+        // console.warn('params', params);
+        $scope.all_arr = '';
+
+        return GardenApi.getByLatLng(params).then(function(result) {
+            // console.warn('result', result);
+
+            gardens = result.gardens;
+            markets = result.markets;
+
+            if (gardens.length > 0){
+              angular.forEach(gardens, function(i) {
+                arr_gardens.push({
+                  id: i._id,
+                  lat: i.geolocation[1],
+                  lng: i.geolocation[0],
+                  garden: i.garden,
+                  type: 'garden',
+                  email: i.email,
+                  fullName: i.fullName,
+                  // address: 'Av cruz de rebouças, 1222, TIJIPIÓ - PE'
+                })
+              })
+            } else { console.warn('nenhuma horta') }
+
+            if (markets.length > 0){
+              angular.forEach(markets, function(i) {
+                arr_markets.push({
+                  id: i._id,
+                  title: i.title,
+                  lat: i.geolocation[1],
+                  lng: i.geolocation[0],
+                  rating_value: i.rating_value,
+                  type: i.type,
+                  link: i.link
+                })
+              })
+            } else { console.warn('nenhuma feira') }
+
+            all_arr = arr_gardens.concat(arr_markets);
+
+            $scope.arr_gardens = arr_gardens;
+            $scope.arr_markets = arr_markets;
+            $scope.all_arr = all_arr;
+
+            $scope.$emit('pins_ok');
+        }, function(err) {
+          if (err === 401) { console.log('não tem permissão') }
+          else {$log.warn('status error: ', err)}
         });
       }
 
@@ -456,17 +551,67 @@
       }
 
       function _showModal(marker, i) {
-        console.warn('dsds', i.marker.data);
-
         vm.modal_marker = i.marker.data;
 
-        $ionicModal.fromTemplateUrl('templates/modals/map-modal.html', {
-          scope: $scope,
-          animation: 'slide-in-up'
-        }).then(function(modal) {
-          $scope.modal = modal;
-          $scope.modal.show();
+        // console.log(vm.modal_marker);
+
+        // exibe o modal para as hortas
+        if (vm.modal_marker.type === 'garden') {
+          $ionicModal.fromTemplateUrl('templates/modals/map-modal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+          }).then(function(modal) {
+            $scope.modal = modal;
+            $scope.modal.show();
+          });
+        } else {
+          return;
+        }
+      }
+
+      function _backMyLocation() {
+        $scope.infowindow.close();
+
+        $scope.map.setZoom(14);
+        $scope.map.setCenter($scope.userMarker.getPosition());
+      }
+
+      function _showAllMarkers() {
+        $scope.map.fitBounds($scope.bounds);
+      }
+
+      function _addToFavorite(id) {
+        return addFavorite(id).then(function() {
+          vm.lookup();
         });
+      }
+
+      function addFavorite(id) {
+        var params = { favID: id };
+
+        return UserApi.addFavorite(params).then(function(result) {
+          // $log.info('addFavorite: ', result);
+          $scope.modal.hide();
+        }, function(err) {
+          if (err === 401) { console.log('não tem permissão') }
+          else {$log.warn('status error: ', err)}
+        })
+      }
+
+      function _lookup() {
+        return getUser().then(function() {
+        });
+      }
+
+      function getUser() {
+        return UserApi.lookup().then(function(result) {
+          localstorage.saveUser(result);
+          $log.info('lookup: ', result);
+          $scope.modal.hide();
+        }, function(err) {
+          if (err === 401) { console.log('não tem permissão') }
+          else {$log.warn('status error: ', err)}
+        })
       }
 
     }

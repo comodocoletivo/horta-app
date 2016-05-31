@@ -1,6 +1,6 @@
 <ion-modal-view>
   <ion-header-bar>
-    <h1 class="title">{{geo.modal_marker.type}}</h1>
+    <h1 class="title">Horta</h1>
 
     <button class="button button-active button-primary"
       ng-click="modal.hide()">fechar</button>
@@ -8,11 +8,18 @@
 
   <ion-content>
     <div class="list card">
-      <div class="item item-body">
-        <p>{{geo.modal_marker.title}}</p>
+      <div class="item item-thumbnail-left">
+        <img src="{{geo.modal_marker.picture}}">
+        <h2>{{geo.modal_marker.fullName}}</h2>
+        <p>{{geo.modal_marker.email}}</p>
 
-        <p><a href="#" class="subdued">{{geo.modal_marker.link}}</a></p>
+        <button class="button button-small button-stable"
+          ng-click="geo.addToFavorite(geo.modal_marker.id)">
+          favoritar
+        </button>
       </div>
+
+      <p class="item assertive" ng-repeat="produto in geo.modal_marker.garden"> {{produto.item}}</p>
     </div>
   </ion-content>
 </ion-modal-view>

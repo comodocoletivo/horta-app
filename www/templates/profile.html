@@ -6,32 +6,22 @@
   <ion-content>
     <div class="list card">
       <div class="item item-avatar">
-        <img src="avatar.jpg">
-        <h2>Pedro Borges</h2>
-        <p>pedroborges@gmail.com</p>
+        <img src="{{user.social.picture}}">
+        <h2>{{user.fullName}}</h2>
+        <p>{{user.email}}</p>
       </div>
 
-      <a href="#/login" class="button icon-left ion-android-exit">sair</a>
+      <a ng-click="profile.logout()" class="button icon-left ion-android-exit">sair</a>
     </div>
 
-    <!-- <h5 class="subtitle">minha horta</h5> -->
+    <!-- <h5 class="subtitle">{{user.garden}}</h5> -->
 
     <button class="button button-full button-dark"
       ng-click="profile.modal()">adicionar novo item</button>
 
-    <a class="item item-icon-right assertive" ng-click="profile.action('1')">
-      Alface
-      <i class="icon ion-ios-trash-outline"></i>
-    </a>
-
-    <a class="item item-icon-right assertive" ng-click="profile.action('2')">
-      Uva
-      <i class="icon ion-ios-trash-outline"></i>
-    </a>
-
-    <a class="item item-icon-right assertive" ng-click="profile.action('3')">
-      Pêra
-      <i class="icon ion-ios-trash-outline"></i>
+    <a class="item item-icon-right assertive"
+      ng-repeat="produto in user.garden"> {{produto.item}}
+      <i class="icon ion-ios-trash-outline" ng-click="profile.action(produto._id)"></i>
     </a>
   </ion-content>
 </ion-view>
