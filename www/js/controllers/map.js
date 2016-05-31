@@ -294,13 +294,13 @@
         $scope.map = map;
         $scope.userMarker = userMarker;
 
-        // $scope.$emit('map_ok');
+        $scope.$emit('map_ok');
 
         hideLoading();
 
         // Eventos
         // carrega mais marcadores
-        google.maps.event.addListener(map, 'dragend', _showMarkers);
+        // google.maps.event.addListener(map, 'dragend', _showMarkers);
       }
 
       function _addMarkers() {
@@ -394,7 +394,7 @@
 
         // console.warn('user_location', params);
 
-        return GardenApi.getByLatLng(params).then(function(result) {
+        return GardenApi.getAll().then(function(result) {
             console.warn('result', result);
 
             gardens = result.gardens;
@@ -551,7 +551,7 @@
       function _showModal(marker, i) {
         vm.modal_marker = i.marker.data;
 
-        console.log(vm.modal_marker);
+        // console.log(vm.modal_marker);
 
         // exibe o modal para as hortas
         if (vm.modal_marker.type === 'garden') {
