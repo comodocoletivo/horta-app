@@ -12,7 +12,7 @@
       /* jshint validthis: true */
       var vm = this;
 
-      showMap();
+      // showMap();
 
       vm.initialize = _initialize;
       vm.addMarkers = _addMarkers;

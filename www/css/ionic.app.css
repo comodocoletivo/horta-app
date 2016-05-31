@@ -9830,3 +9830,10 @@ html, body {
   margin: 0 0 20px 0; }
   .img-primary img {
     max-width: 70%; }
+
+.tabs-striped.tabs-color-assertive .tab-item.tab-item-active, .tabs-striped.tabs-color-assertive .tab-item.active, .tabs-striped.tabs-color-assertive .tab-item.activated {
+  color: #16663b;
+  border-color: #16663b; }
+
+.tabs-striped.tabs-color-assertive .tab-item {
+  color: rgba(22, 102, 59, 0.4); }
