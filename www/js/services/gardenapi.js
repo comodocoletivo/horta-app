@@ -15,12 +15,28 @@
 
       return {
         getAll: getAll,
+        getByLatLng: getByLatLng,
         addItem: addItem,
         removeItem: removeItem
       };
 
       function getAll() {
         return $http.get(apiUrl + '/api/v1/markets/', { headers: {
+          'Content-Type': 'application/json'
+        }}).then(success).catch(error);
+
+        function success(response) {
+          sessionStorage.setItem('authorization', response.headers()['authorization']);
+          return response.data;
+        }
+
+        function error(err) {
+          return $q.reject(err.status);
+        }
+      }
+
+      function getByLatLng(data) {
+        return $http.get(apiUrl + '/api/v1/markets/' + data.lat + ',' + data.lng, { headers: {
           'Content-Type': 'application/json'
         }}).then(success).catch(error);
 

@@ -386,9 +386,13 @@
         arr_gardens = [];
         arr_markets = [];
 
-        // params = $scope.user_location;
+        params = $scope.user_location;
 
-        return GardenApi.getAll().then(function(result) {
+        console.warn('user_location', params);
+
+        return GardenApi.getByLatLng(params).then(function(result) {
+            console.warn('result', result);
+
             gardens = result.gardens;
             markets = result.markets;
 
