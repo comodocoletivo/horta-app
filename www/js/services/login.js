@@ -23,6 +23,7 @@
         }}).then(success).catch(error);
 
         function success(response) {
+          sessionStorage.setItem('authorization', response.headers()['authorization']);
           return response.data;
         }
 
