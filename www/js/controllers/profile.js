@@ -15,13 +15,14 @@
       vm.action = showAction;
       vm.modal = showModal;
       vm.addItem = addItem;
+      vm.removeItem = removeItem;
       vm.logout = logout;
       vm.lookup = lookup;
 
       function showAction(id) {
-        var id, hideSheet;
+        var params, hideSheet;
 
-        id = id;
+        params = { itemID: id };
 
         hideSheet = $ionicActionSheet.show({
            buttons: [{ text: 'Sim' }],
@@ -31,7 +32,7 @@
             hideSheet();
           },
           buttonClicked: function(index) {
-            console.log('id foi', id)
+            vm.removeItem(params);
             return true;
           }
 
@@ -63,6 +64,23 @@
         }, function(err) {
           $scope.modal.hide();
 
+          if (err === 401) { console.log('não tem permissão') }
+          else {$log.warn('status error: ', err)}
+        })
+      }
+
+      function removeItem(id) {
+        return remove(id).then(function() {
+          vm.lookup();
+        });
+      }
+
+      function remove(id) {
+        var params = id;
+
+        return GardenApi.removeItem(params).then(function(result) {
+          $log.info('removeItem: ', result);
+        }, function(err) {
           if (err === 401) { console.log('não tem permissão') }
           else {$log.warn('status error: ', err)}
         })

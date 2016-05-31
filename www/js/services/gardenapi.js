@@ -15,7 +15,8 @@
 
       return {
         getAll: getAll,
-        addItem: addItem
+        addItem: addItem,
+        removeItem: removeItem
       };
 
       function getAll(data) {
@@ -46,7 +47,30 @@
         function error(err) {
           return $q.reject(err.status);
         }
+      }
 
+      function removeItem(data) {
+        var obj, config;
+
+        obj = data;
+
+        config = {
+          data: JSON.stringify(obj),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': sessionStorage.getItem('authorization')
+          }
+        };
+
+        return $http.delete(apiUrl + '/api/v1/garden/', config).then(success).catch(error);
+
+        function success(response) {
+          return response.data;
+        }
+
+        function error(err) {
+          return $q.reject(err.status);
+        }
       }
     }
 
