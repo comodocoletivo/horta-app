@@ -473,7 +473,8 @@
 
         params = latLng;
 
-        console.warn('params', params);
+        // console.warn('params', params);
+        $scope.all_arr = '';
 
         return GardenApi.getByLatLng(params).then(function(result) {
             // console.warn('result', result);
