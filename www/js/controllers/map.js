@@ -18,6 +18,7 @@
       vm.addMarkers = _addMarkers;
       vm.getMarkersByApi = _getMarkersByApi;
       vm.showModal = _showModal;
+      vm.backMyLocation = _backMyLocation;
 
       // executando as funções
       $scope.$on('map_ok', vm.getMarkersByApi);
@@ -62,13 +63,13 @@
           zoom: 15,
           panControl: false,
           streetViewControl: false,
-          zoomControl: true,
-          scrollwheel: false,
+          zoomControl: false,
+          mapTypeControl: false,
+          scrollwheel: true,
           draggable: true,
           zIndex: 100,
           clickable: true,
           title: 'Você está aqui',
-          mapTypeControl: false,
           zoomControlOptions: {
             style: google.maps.ZoomControlStyle.SMALL,
             position: google.maps.ControlPosition.RIGHT_BOTTOM
@@ -472,6 +473,13 @@
         } else {
           return;
         }
+      }
+
+      function _backMyLocation() {
+        $scope.infowindow.close();
+
+        $scope.map.setZoom(14);
+        $scope.map.setCenter($scope.userMarker.getPosition());
       }
 
     }
