@@ -355,7 +355,7 @@
 
               if (marker.data.type !== 'garden') {
                 // feiras
-                var string = "<h5>" + marker.data.title + "</h5>" + "<p>Avaliações: " + "<b>" + marker.data.rating_value + "</b>" + "<p>" + "Mais informações: " + "<b>" + "<a href=" + marker.data.link + " target='_blank'>link</a>" + "</b>" + "</p>";
+                var string = "<h5>" + marker.data.title + "</h5>" + "<p>Avaliações: " + "<b>" + marker.data.rating_value + "</b>" + "</p>";
 
                 $scope.infowindow.setContent(string);
               } else {
