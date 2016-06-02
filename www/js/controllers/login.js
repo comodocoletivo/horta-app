@@ -87,16 +87,6 @@
           params.picture = result.data.picture;
 
           $rootScope.fb = params;
-
-          // // var html = '<table id="table" data-role="table" data-mode="column" class="ui-responsive"><thead><tr><th>Field</th><th>Info</th></tr></thead><tbody>';
-          // // html = html + "<tr><td>" + "Name" + "</td><td>" + name + "</td></tr>";
-          // // html = html + "<tr><td>" + "Gender" + "</td><td>" + gender + "</td></tr>";
-          // // html = html + "<tr><td>" + "Picture" + "</td><td><img src='" + picture.data.url + "' /></td></tr>";
-
-          // // html = html + "</tbody></table>";
-
-          // document.getElementById("listTable").innerHTML = html;
-          // $.mobile.changePage($("#profile"), "slide", true, true);
         }, function(error) {
           alert("Error: displayData " + error);
         });
