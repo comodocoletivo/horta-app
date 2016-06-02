@@ -29,6 +29,11 @@ html, body {
   height: 100%;
 }
 
+body {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 62.5%;
+}
+
 .map-container {
   width: 100%;
   height: 523px;
@@ -42,7 +47,19 @@ html, body {
   text-align: center;
   margin: 0 0 100px 0;
 
+  &.fp { // forgot pass
+    margin-bottom: 50px;
+  }
+
   img { max-width: 70%; }
+
+  figcaption {
+    margin-top: 40px;
+    font-size: 2.4rem;
+    color: #16663b;
+    font-weight: 600;
+    line-height: 2.4rem;
+  }
 }
 
 .tabs-striped.tabs-color-assertive .tab-item.tab-item-active, .tabs-striped.tabs-color-assertive .tab-item.active, .tabs-striped.tabs-color-assertive .tab-item.activated {
@@ -72,6 +89,14 @@ h5.subtitle {
 
 .wrp-link {
   text-align: center;
+
+  a {
+    font-size: 14px;
+    color: #16663b;
+    font-weight: 100;
+    display: block;
+    margin-top: 10px;
+  }
 }
 
 .wrp-controls-map {
@@ -113,3 +138,37 @@ h5.subtitle {
     }
   }
 }
+
+%btn-horta {
+  width: 80% !important;
+  margin-left: 10%;
+  border-radius: 40px;
+  font-weight: 600;
+}
+
+.wrp-button {
+  button {
+    @extend %btn-horta;
+  }
+}
+
+.btn-horta {
+  @extend %btn-horta;
+}
+
+//
+// rewrite
+//
+
+.title {
+  color: #16663b;
+}
+
+.button-positive {
+  background-color: #395185 !important;
+}
+
+.button-dark {
+  background-color: #16663b !important;
+}
+
