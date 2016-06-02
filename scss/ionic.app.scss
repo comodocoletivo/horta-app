@@ -172,3 +172,16 @@ h5.subtitle {
   background-color: #16663b !important;
 }
 
+.spinner svg {
+  width: 100px;
+  height: 100px;
+  stroke: #16663b;
+  fill: #16663b;
+
+  position: absolute;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+}

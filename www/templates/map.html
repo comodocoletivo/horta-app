@@ -4,6 +4,10 @@
   </ion-header-bar>
 
   <ion-content>
+    <div ng-hide="map">
+      <ion-spinner icon="ripple"></ion-spinner>
+    </div>
+
     <div class="wrp-controls-map">
       <button class="my_location" ng-click="geo.backMyLocation()">Mostrar meu local</button>
       <!-- <button class="all_map" ng-click="geo.showAllMarkers()">visualizar todo o mapa</button> -->
