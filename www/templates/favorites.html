@@ -6,14 +6,16 @@
   </ion-header-bar>
 
   <ion-content>
-    <div class="list">
+    <div ng-hide="fav.all_favorites">
+      <ion-spinner icon="ripple"></ion-spinner>
+    </div>
 
+    <div class="list">
       <a ng-repeat="user in fav.all_favorites" class="item item-avatar">
         <img src="{{user.picture}}">
         <h2>{{user.fullName}}</h2>
         <p>{{user.email}}</p>
       </a>
-
     </div>
   </ion-content>
 </ion-view>
