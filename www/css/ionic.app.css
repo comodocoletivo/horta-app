@@ -9818,6 +9818,10 @@ a.button {
 html, body {
   height: 100%; }
 
+body {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 62.5%; }
+
 .map-container {
   width: 100%;
   height: 523px; }
@@ -9828,8 +9832,16 @@ html, body {
 .img-primary {
   text-align: center;
   margin: 0 0 100px 0; }
+  .img-primary.fp {
+    margin-bottom: 50px; }
   .img-primary img {
     max-width: 70%; }
+  .img-primary figcaption {
+    margin-top: 40px;
+    font-size: 2.4rem;
+    color: #16663b;
+    font-weight: 600;
+    line-height: 2.4rem; }
 
 .tabs-striped.tabs-color-assertive .tab-item.tab-item-active, .tabs-striped.tabs-color-assertive .tab-item.active, .tabs-striped.tabs-color-assertive .tab-item.activated {
   color: #16663b;
@@ -9853,6 +9865,12 @@ h5.subtitle {
 
 .wrp-link {
   text-align: center; }
+  .wrp-link a {
+    font-size: 14px;
+    color: #16663b;
+    font-weight: 100;
+    display: block;
+    margin-top: 10px; }
 
 .wrp-controls-map {
   position: absolute;
@@ -9883,3 +9901,30 @@ h5.subtitle {
     .wrp-controls-map button.all_map {
       background-size: 40%;
       background-image: url("../img/icon-all-map.png"); }
+
+.wrp-button button, .btn-horta {
+  width: 80% !important;
+  margin-left: 10%;
+  border-radius: 40px;
+  font-weight: 600; }
+
+.title {
+  color: #16663b; }
+
+.button-positive {
+  background-color: #395185 !important; }
+
+.button-dark {
+  background-color: #16663b !important; }
+
+.spinner svg {
+  width: 100px;
+  height: 100px;
+  stroke: #16663b;
+  fill: #16663b;
+  position: absolute;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px; }

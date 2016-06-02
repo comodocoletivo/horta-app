@@ -32,7 +32,7 @@
       // ====
 
       function showMap() {
-        showLoading()
+        // showLoading()
 
         var posOptions, coords;
 

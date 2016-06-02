@@ -1,24 +1,25 @@
 <ion-content>
   <figure class="img-primary">
     <img src="img/logo-primary.png" alt="logo principal">
-    <figcaption>Entrar</figcaption>
+    <figcaption>entrar</figcaption>
   </figure>
 
   <div>
-    <div class="col">
-      <button ng-click="login.modal('email')" class="button button-full button-dark">
-        E-mail
+    <div class="col wrp-button">
+      <button ng-click="login.modal('email')" class="button button-full button-dark">com e-mail
       </button>
 
-      <button ng-click="login.authFb()" class="button button-full button-positive">
-        Facebook
+      <button ng-click="login.authFb()" class="button button-full button-positive">com facebook
       </button>
     </div>
   </div>
 
   <div class="col wrp-link">
-    <a ng-href="#/cadastro">Criar conta</a>
-    <br>
     <a ng-href="#/esqueci-senha">Esqueci a senha</a>
+    <a ng-href="#/cadastro">Criar conta</a>
   </div>
+
+  <!-- <div>
+    aqui -> {{fb}}
+  </div> -->
 </ion-content>
