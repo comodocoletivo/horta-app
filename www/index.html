@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
     <title>Hortalivre</title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
@@ -15,9 +16,6 @@
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-
-    <!-- Cordova -->
-    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
@@ -41,22 +39,14 @@
     <!-- Google Maps -->
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKn2ENvZs8u5DqVXaND2FL6SWnRHmrMJE&amp;libraries=visualization"></script>
 
-    <!-- Facebook -->
-    <script async>
-      (function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) {
-              return;
-          }
-          js = d.createElement(s);
-          js.id = id;
-          js.src = "//connect.facebook.net/en_US/sdk.js";
-          fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    </script>
+    <!-- Cordova -->
+    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+    <script src="lib/ng-cordova-oauth/dist/ng-cordova-oauth.min.js"></script>
   </head>
 
   <body ng-app="starter">
+    <div id="fb-root"></div>
+
     <ion-nav-view></ion-nav-view>
   </body>
 </html>
