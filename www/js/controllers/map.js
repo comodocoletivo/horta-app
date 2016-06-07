@@ -22,38 +22,62 @@
       vm.showAllMarkers = _showAllMarkers;
       vm.addToFavorite = _addToFavorite;
       vm.lookup = _lookup;
+      vm.showMap = showMap;
 
       // executando as funções
       $scope.$on('map_ok', vm.getMarkersByApi);
       $scope.$on('pins_ok', vm.addMarkers);
       $scope.$on('marker_click', vm.showModal);
 
+      document.addEventListener('deviceready', vm.showMap, false);
+      // vm.showMap;
 
       // ====
 
       function showMap() {
         // showLoading()
+        alert('iniciando..');
 
         var posOptions, coords;
 
         posOptions = {
           timeout: 10000,
-          enableHighAccuracy: false
+          enableHighAccuracy: true
         };
 
-        $cordovaGeolocation
-        .getCurrentPosition(posOptions)
-        .then(function (position) {
+        navigator.geolocation.getCurrentPosition(posSuccess, posError, posOptions);
 
-          coords = {
+        function posSuccess(position) {
+          var coords = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
 
+          console.log('position: ', position);
+
           $scope.user_location = coords;
 
           vm.initialize(coords);
-        }, function(err) { console.warn(err) });
+        }
+
+        function posError(err) {
+          console.warn('err', err);
+        }
+
+        // $cordovaGeolocation
+        // .getCurrentPosition(posOptions)
+        // .then(function (position) {
+        //   coords = {
+        //     lat: position.coords.latitude,
+        //     lng: position.coords.longitude
+        //   };
+
+        //   console.log('position: ', position);
+
+        //   $scope.user_location = coords;
+
+        //   vm.initialize(coords);
+        // }, function(err) { console.warn(err) });
       }
 
       function _initialize(args) {
@@ -298,7 +322,7 @@
 
         $scope.$emit('map_ok');
 
-        hideLoading();
+        // hideLoading();
 
         // Eventos
         // carrega mais marcadores
