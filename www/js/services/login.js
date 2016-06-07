@@ -37,11 +37,12 @@
       }
 
       function authFacebook(data) {
-        return $http.post(apiUrl + '/api/v1/auth/', data, { headers: {
+        return $http.post(apiUrl + '/api/v1/auth/fb/', data, { headers: {
           'Content-Type': 'application/json'
         }}).then(success).catch(error);
 
         function success(response) {
+          sessionStorage.setItem('authorization', response.headers()['authorization']);
           return response.data;
         }
 

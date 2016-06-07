@@ -107,6 +107,7 @@
           $location.path('app/map');
         }, function(fail){
           //fail get profile info
+          $location.path('app/login');
           console.log('profile info fail', fail);
         });
       };
@@ -138,10 +139,6 @@
 
   				//check if we have our user saved
   				var user = Loginservice.getUser('facebook');
-          // $ionicPopup.alert({
-          //    title: 'User',
-          //    template: user.userID
-          //  });
   				if(!user.userID)
   				{
   					getFacebookProfileInfo(success.authResponse)
@@ -154,13 +151,41 @@
   							email: profileInfo.email,
   							picture : "http://graph.facebook.com/" + success.authResponse.userID + "/picture?type=large"
   						});
-  						$location.path('app/map');
+
+              var authFBData = {
+                email: profileInfo.email,
+                accessToken: authResponse.accessToken,
+                fbID: success.authResponse.userID
+              }
+              Loginservice.authFacebook(authFBData).then(function(result){
+                $location.path('app/map');
+              }, function(err){
+                if (err === 401) { $location.path('app/login'); }
+                else {$log.warn('status error: ', err)}
+              });
+
   					}, function(fail){
   						//fail get profile info
-  						console.log('profile info fail', fail);
+              $location.path('app/login');
   					});
   				}else{
-  					$location.path('app/map');
+            var authFBData = {
+              email: success.authResponse.email,
+              accessToken: success.authResponse.accessToken,
+              fbID: success.authResponse.userID
+            }
+            Loginservice.authFacebook(authFBData).then(function(result){
+              // $ionicPopup.alert({
+              //    title: 'User',
+              //    template: authFBData.fbID
+              //  });
+              localstorage.saveUser(result);
+              $location.path('app/map');
+            }, function(err){
+              if (err === 401) { $location.path('app/cadastro'); }
+              else {console.warn('status error: ', err)}
+            })
+              // $location.path('app/map');
   				}
 
        } else {
