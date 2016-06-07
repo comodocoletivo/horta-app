@@ -6,7 +6,7 @@
     .module('starter.controllers')
     .factory('Loginservice', Loginservice);
 
-    Loginservice.$inject = ['$http', 'ApiConfig', '$log', '$q'];
+    Loginservice.$inject = ['$http', 'ApiConfig', '$log', '$q', $state, $ionicLoading];
 
     function Loginservice($http, ApiConfig, $log, $q) {
       var apiUrl;
@@ -15,7 +15,9 @@
 
       return {
         authEmail: authEmail,
-        authFacebook: authFacebook
+        authFacebook: authFacebook,
+        getUser: getUser,
+        setUser: setUser
       };
 
       function authEmail(data) {
@@ -47,6 +49,14 @@
           return $q.reject(err.status);
         }
       }
+
+      function setUser(user_data) {
+        window.localStorage.starter_facebook_user = JSON.stringify(user_data);
+      };
+
+      function getUser(){
+        return JSON.parse(window.localStorage.starter_facebook_user || '{}');
+      };
     }
 
 })();
