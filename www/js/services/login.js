@@ -6,7 +6,7 @@
     .module('starter.controllers')
     .factory('Loginservice', Loginservice);
 
-    Loginservice.$inject = ['$http', 'ApiConfig', '$log', '$q', $state, $ionicLoading];
+    Loginservice.$inject = ['$http', 'ApiConfig', '$log', '$q'];
 
     function Loginservice($http, ApiConfig, $log, $q) {
       var apiUrl;
