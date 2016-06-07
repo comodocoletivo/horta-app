@@ -65,9 +65,5 @@
           return $q.reject(err.status);
         }
       }
-
-    },
-
-
-
+    }
 })();

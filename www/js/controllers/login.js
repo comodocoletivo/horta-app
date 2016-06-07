@@ -6,7 +6,7 @@
     .module('starter.controllers')
     .controller('LoginCtrl', Login);
 
-    Login.$inject = ['$scope', '$log', 'Loginservice', '$location', '$ionicModal', 'localstorage', '$cordovaOauth', '$rootScope', '$http', $ionicLoading, $q, $state, $ionicPopup] ;
+    Login.$inject = ['$scope', '$log', 'Loginservice', '$location', '$ionicModal', 'localstorage', '$cordovaOauth', '$rootScope', '$http', '$ionicLoading', '$q', '$state', '$ionicPopup'] ;
 
     function Login($scope, $log, Loginservice, $location, $ionicModal, localstorage, $cordovaOauth, $rootScope, $http, $ionicLoading, $q, $state, $ionicPopup) {
       /* jshint validthis: true */
@@ -185,7 +185,7 @@
               if (err === 401) { $location.path('app/cadastro'); }
               else {console.warn('status error: ', err)}
             })
-              // $location.path('app/map');
+            // $location.path('app/map');
   				}
 
        } else {
