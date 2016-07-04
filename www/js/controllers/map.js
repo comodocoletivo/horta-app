@@ -36,7 +36,7 @@
 
       function showMap() {
         // showLoading()
-        alert('iniciando..');
+        // alert('iniciando..');
 
         var posOptions, coords;
 
@@ -594,10 +594,12 @@
       }
 
       function _backMyLocation() {
+        alert('entrei no backMyLocation');
         $scope.infowindow.close();
 
         $scope.map.setZoom(14);
         $scope.map.setCenter($scope.userMarker.getPosition());
+        alert('sai do backMyLocation');
       }
 
       function _showAllMarkers() {

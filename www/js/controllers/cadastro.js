@@ -58,7 +58,8 @@
       }
 
       function authFb() {
-        console.log('cadastro por facebook')
+        alert('Cadastro por Facebook em desenvolvimento.');
+        // console.log('cadastro por facebook')
       }
 
 
