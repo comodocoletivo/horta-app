@@ -12,8 +12,6 @@
       /* jshint validthis: true */
       var vm = this;
 
-      // showMap();
-
       vm.initialize = _initialize;
       vm.addMarkers = _addMarkers;
       vm.getMarkersByApi = _getMarkersByApi;
@@ -30,17 +28,12 @@
       $scope.$on('marker_click', vm.showModal);
 
       // document.addEventListener('deviceready', vm.showMap, false);
-      console.log('alo alo alo ');
       vm.showMap();
-      console.log('alo2 alo2 alo2 ');
 
       // ====
 
       function showMap() {
         // showLoading()
-        // alert('iniciando..');
-        console.info('entrei no showmap');
-
         var posOptions, coords;
 
         posOptions = {
@@ -56,7 +49,7 @@
             lng: position.coords.longitude
           };
 
-          console.log('position: ', position);
+          // console.log('position: ', position);
 
           $scope.user_location = coords;
 
@@ -67,25 +60,10 @@
           alert('Erro ao obter a sua localização', err);
           console.warn('err', err);
         }
-
-        // $cordovaGeolocation
-        // .getCurrentPosition(posOptions)
-        // .then(function (position) {
-        //   coords = {
-        //     lat: position.coords.latitude,
-        //     lng: position.coords.longitude
-        //   };
-
-        //   console.log('position: ', position);
-
-        //   $scope.user_location = coords;
-
-        //   vm.initialize(coords);
-        // }, function(err) { console.warn(err) });
       }
 
       function _initialize(args) {
-        console.info('entrei no _initialize');
+        // console.info('entrei no _initialize');
 
         var ls_position, userPosition, map, userMarker, userRadius, styles, styledMap;
 
@@ -600,12 +578,12 @@
       }
 
       function _backMyLocation() {
-        alert('entrei no backMyLocation');
+        // alert('entrei no backMyLocation');
         $scope.infowindow.close();
 
         $scope.map.setZoom(14);
         $scope.map.setCenter($scope.userMarker.getPosition());
-        alert('sai do backMyLocation');
+        // alert('sai do backMyLocation');
       }
 
       function _showAllMarkers() {
