@@ -12,7 +12,7 @@
       /* jshint validthis: true */
       var vm = this;
 
-      showMap();
+      // showMap();
 
       vm.initialize = _initialize;
       vm.addMarkers = _addMarkers;
@@ -29,14 +29,17 @@
       $scope.$on('pins_ok', vm.addMarkers);
       $scope.$on('marker_click', vm.showModal);
 
-      document.addEventListener('deviceready', vm.showMap, false);
-      // vm.showMap;
+      // document.addEventListener('deviceready', vm.showMap, false);
+      console.log('alo alo alo ');
+      vm.showMap();
+      console.log('alo2 alo2 alo2 ');
 
       // ====
 
       function showMap() {
         // showLoading()
         // alert('iniciando..');
+        console.info('entrei no showmap');
 
         var posOptions, coords;
 
@@ -61,6 +64,7 @@
         }
 
         function posError(err) {
+          alert('Erro ao obter a sua localização', err);
           console.warn('err', err);
         }
 
@@ -81,6 +85,8 @@
       }
 
       function _initialize(args) {
+        console.info('entrei no _initialize');
+
         var ls_position, userPosition, map, userMarker, userRadius, styles, styledMap;
 
         userPosition = new google.maps.LatLng(args.lat, args.lng);
