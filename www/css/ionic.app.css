@@ -9928,3 +9928,7 @@ h5.subtitle {
   left: 50%;
   margin-top: -50px;
   margin-left: -50px; }
+
+.wrp-spinner {
+  margin-top: 50%;
+}
